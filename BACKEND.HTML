@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Beat Flow Desktop</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#0f0f0f;
+    color:white;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* APP */
+.app{
+    display:flex;
+    height:100vh;
+}
+
+/* MENU */
+.sidebar{
+    width:260px;
+    background:#000;
+    padding:25px;
+    border-right:1px solid #222;
+}
+
+.logo{
+    color:#1DB954;
+    font-size:32px;
+    font-weight:bold;
+    margin-bottom:40px;
+}
+
+.menu button{
+    width:100%;
+    padding:15px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:10px;
+    background:#181818;
+    color:white;
+    text-align:left;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.menu button:hover{
+    background:#1DB954;
+}
+
+/* CONTEÚDO */
+.content{
+    flex:1;
+    padding:30px;
+    overflow:auto;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar h1{
+    color:#1DB954;
+}
+
+.user{
+    background:#1e1e1e;
+    padding:10px 20px;
+    border-radius:30px;
+}
+
+/* LOGIN */
+.login-box{
+    width:400px;
+    background:#181818;
+    padding:40px;
+    border-radius:20px;
+    margin:80px auto;
+    text-align:center;
+}
+
+.login-box input{
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border:none;
+    border-radius:10px;
+    background:#2a2a2a;
+    color:white;
+}
+
+.login-box button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    background:#1DB954;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-box button:hover{
+    background:#18a74a;
+}
+
+/* MÚSICAS */
+.music-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#181818;
+    padding:20px;
+    border-radius:15px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    background:#222;
+}
+
+.card img{
+    width:100%;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#1DB954;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.card button:hover{
+    background:#18a74a;
+}
+
+/* PLAYER */
+.player{
+    position:fixed;
+    bottom:0;
+    left:260px;
+    right:0;
+    background:#181818;
+    padding:15px;
+    border-top:1px solid #333;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.player-info{
+    font-size:15px;
+}
+
+.player-controls button{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:#1DB954;
+    color:white;
+    cursor:pointer;
+    margin-left:10px;
+}
+
+.player-controls button:hover{
+    background:#18a74a;
+}
+
+audio{
+    width:350px;
+}
+
+/* HOME */
+#homePage{
+    display:none;
+}
+
+.link{
+    color:#1DB954;
+    margin-top:15px;
+    cursor:pointer;
+}
+
+.link:hover{
+    text-decoration:underline;
+}
+
+.logout{
+    background:#ff3b3b !important;
+}
+
+.logout:hover{
+    background:#d92626 !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+
+    <div class="login-box">
+
+        <h1 style="margin-bottom:25px; color:#1DB954;">
+            🎵 Beat Flow
+        </h1>
+
+        <input type="email"
+               id="email"
+               placeholder="Digite seu email">
+
+        <input type="password"
+               id="senha"
+               placeholder="Digite sua senha">
+
+        <button onclick="login()">
+            Entrar
+        </button>
+
+        <button onclick="cadastrar()">
+            Criar Conta
+        </button>
+
+        <div class="link" onclick="esqueciSenha()">
+            🔑 Esqueci minha senha
+        </div>
+
+        <div class="link" onclick="atualizarSenha()">
+            🔄 Atualizar senha
+        </div>
+
+    </div>
+
+</div>
+
+<!-- HOME -->
+<div id="homePage">
+
+    <div class="app">
+
+        <!-- MENU -->
+        <div class="sidebar">
+
+            <div class="logo">
+                Beat Flow
+            </div>
+
+            <div class="menu">
+
+                <button>
+                    🏠 Início
+                </button>
+
+                <button>
+                    🔥 Em alta
+                </button>
+
+                <button>
+                    ❤️ Favoritas
+                </button>
+
+                <button class="logout"
+                        onclick="logout()">
+                    🚪 Sair
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- CONTEÚDO -->
+        <div class="content">
+
+            <div class="topbar">
+
+                <h1>
+                    🎧 Suas músicas
+                </h1>
+
+                <div class="user"
+                     id="usuarioNome">
+                </div>
+
+            </div>
+
+            <div class="music-grid">
+
+                <div class="card">
+
+                    <img src="https://picsum.photos/300?1">
+
+                    <h3>Música 1</h3>
+
+                    <button onclick="tocar('musica1.mp3','Música 1')">
+                        ▶️ Tocar
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="https://picsum.photos/300?2">
+
+                    <h3>Música 2</h3>
+
+                    <button onclick="tocar('musica2.mp3','Música 2')">
+                        ▶️ Tocar
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="https://picsum.photos/300?3">
+
+                    <h3>Música 3</h3>
+
+                    <button onclick="tocar('musica3.mp3','Música 3')">
+                        ▶️ Tocar
+                    </button>
+
+                </div>
+
+                <div class="card">
+
+                    <img src="https://picsum.photos/300?4">
+
+                    <h3>Música 4</h3>
+
+                    <button onclick="tocar('musica4.mp3','Música 4')">
+                        ▶️ Tocar
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PLAYER -->
+    <div class="player">
+
+        <div class="player-info"
+             id="musica">
+            Nenhuma música tocando
+        </div>
+
+        <audio id="player" controls></audio>
+
+        <div class="player-controls">
+
+            <button onclick="pausar()">
+                ⏸️ Pausar
+            </button>
+
+        </div>
+
+    </div>
+
+</div> 
+<script>
+// 📦 Banco de dados fake
+let usuarios =
+JSON.parse(localStorage.getItem("usuarios"))
+|| [];
+
+// 💾 salvar usuários
+function salvar(){
+
+    localStorage.setItem(
+        "usuarios",
+        JSON.stringify(usuarios)
+    );
+}
+
+// 📩 validar email
+function emailValido(email){
+
+    return email.includes("@") &&
+           email.includes(".");
+}
+
+// 🔐 cadastrar usuário
+function cadastrar(){
+
+    const email =
+    prompt("Digite seu email:");
+
+    const senha =
+    prompt("Crie uma senha:");
+
+    if(!email || !senha){
+
+        return alert(
+            "⚠️ Preencha todos os campos!"
+        );
+    }
+
+    if(!emailValido(email)){
+
+        return alert(
+            "❌ Email inválido!"
+        );
+    }
+
+    if(senha.length < 6){
+
+        return alert(
+            "❌ Senha muito fraca!"
+        );
+    }
+
+    const existe =
+    usuarios.find(
+        u => u.email === email
+    );
+
+    if(existe){
+
+        return alert(
+            "⚠️ Usuário já existe!"
+        );
+    }
+
+    usuarios.push({
+        email,
+        senha,
+        criadoEm:
+        new Date().toLocaleDateString()
+    });
+
+    salvar();
+
+    alert(
+        "✅ Conta criada com sucesso!"
+    );
+}
+
+// 🔑 login
+function login(){
+
+    const email =
+    document.getElementById(
+        "email"
+    ).value.trim();
+
+    const senha =
+    document.getElementById(
+        "senha"
+    ).value.trim();
+
+    if(!email || !senha){
+
+        return alert(
+            "⚠️ Digite email e senha!"
+        );
+    }
+
+    const user =
+    usuarios.find(
+        u =>
+        u.email === email &&
+        u.senha === senha
+    );
+
+    if(user){
+
+        localStorage.setItem(
+            "logado",
+            email
+        );
+
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+            "homePage"
+        ).style.display = "block";
+
+        document.getElementById(
+            "usuarioNome"
+        ).innerText =
+        "👤 " + email;
+
+    }else{
+
+        alert(
+            "❌ Email ou senha incorretos!"
+        );
+    }
+}
+
+// ❓ recuperar senha
+function esqueciSenha(){
+
+    const email =
+    prompt("Digite seu email:");
+
+    const user =
+    usuarios.find(
+        u => u.email === email
+    );
+
+    if(user){
+
+        alert(
+            "🔑 Sua senha é: " +
+            user.senha
+        );
+
+    }else{
+
+        alert(
+            "❌ Usuário não encontrado!"
+        );
+    }
+}
+
+// 🔄 atualizar senha
+function atualizarSenha(){
+
+    const email =
+    prompt("Digite seu email:");
+
+    const index =
+    usuarios.findIndex(
+        u => u.email === email
+    );
+
+    if(index === -1){
+
+        return alert(
+            "❌ Usuário não encontrado!"
+        );
+    }
+
+    const atual =
+    prompt("Digite sua senha atual:");
+
+    if(
+        usuarios[index].senha !== atual
+    ){
+
+        return alert(
+            "❌ Senha incorreta!"
+        );
+    }
+
+    const nova =
+    prompt("Digite a nova senha:");
+
+    if(!nova || nova.length < 6){
+
+        return alert(
+            "❌ Senha muito fraca!"
+        );
+    }
+
+    const confirmar =
+    prompt("Confirme a nova senha:");
+
+    if(nova !== confirmar){
+
+        return alert(
+            "❌ As senhas não coincidem!"
+        );
+    }
+
+    usuarios[index].senha = nova;
+
+    salvar();
+
+    alert(
+        "✅ Senha atualizada!"
+    );
+}
+
+// 🎵 tocar música
+function tocar(musica,nome){
+
+    const player =
+    document.getElementById(
+        "player"
+    );
+
+    player.src = musica;
+
+    player.play();
+
+    document.getElementById(
+        "musica"
+    ).innerText =
+    "🎶 Tocando: " + nome;
+}
+
+// ⏸️ pausar música
+function pausar(){
+
+    document.getElementById(
+        "player"
+    ).pause();
+}
+
+// 🚪 logout
+function logout(){
+
+    localStorage.removeItem(
+        "logado"
+    );
+
+    document.getElementById(
+        "loginPage"
+    ).style.display = "block";
+
+    document.getElementById(
+        "homePage"
+    ).style.display = "none";
+
+    document.getElementById(
+        "email"
+    ).value = "";
+
+    document.getElementById(
+        "senha"
+    ).value = "";
+
+    alert(
+        "👋 Logout realizado!"
+    );
+}
+
+// 🔥 manter login salvo
+window.onload = () => {
+
+    const logado =
+    localStorage.getItem(
+        "logado"
+    );
+
+    if(logado){
+
+        document.getElementById(
+            "loginPage"
+        ).style.display = "none";
+
+        document.getElementById(
+            "homePage"
+        ).style.display = "block";
+
+        document.getElementById(
+            "usuarioNome"
+        ).innerText =
+        "👤 " + logado;
+    }
+};
+</script>
