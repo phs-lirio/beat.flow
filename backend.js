@@ -293,3 +293,14 @@ window.onload = () => {
         "👤 " + logado;
     }
 };
+import './app.js';
+import './fakeDB.js';
+import './esqueceuSenha.js';
+import './player.js';
+import './playlist.js';
+import './ui.js';
+import './auth.js';
+import './atualizarSenha.js';
+import './avoritos.js';
+
+
