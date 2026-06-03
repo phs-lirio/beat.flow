@@ -1,10 +1,10 @@
 // 📦 Banco de dados fake
 let usuarios =
-JSON.parse(localStorage.getItem("usuarios"))
-|| [];
+    JSON.parse(localStorage.getItem("usuarios"))
+    || [];
 
 // 💾 salvar usuários
-function salvar(){
+function salvar() {
 
     localStorage.setItem(
         "usuarios",
@@ -13,36 +13,36 @@ function salvar(){
 }
 
 // 📩 validar email
-function emailValido(email){
+function emailValido(email) {
 
     return email.includes("@") &&
-           email.includes(".");
+        email.includes(".");
 }
 
 // 🔐 cadastrar usuário
-function cadastrar(){
+function cadastrar() {
 
     const email =
-    prompt("Digite seu email:");
+        prompt("Digite seu email:");
 
     const senha =
-    prompt("Crie uma senha:");
+        prompt("Crie uma senha:");
 
-    if(!email || !senha){
+    if (!email || !senha) {
 
         return alert(
             "⚠️ Preencha todos os campos!"
         );
     }
 
-    if(!emailValido(email)){
+    if (!emailValido(email)) {
 
         return alert(
             "❌ Email inválido!"
         );
     }
 
-    if(senha.length < 6){
+    if (senha.length < 6) {
 
         return alert(
             "❌ Senha muito fraca!"
@@ -50,11 +50,11 @@ function cadastrar(){
     }
 
     const existe =
-    usuarios.find(
-        u => u.email === email
-    );
+        usuarios.find(
+            u => u.email === email
+        );
 
-    if(existe){
+    if (existe) {
 
         return alert(
             "⚠️ Usuário já existe!"
@@ -65,7 +65,7 @@ function cadastrar(){
         email,
         senha,
         criadoEm:
-        new Date().toLocaleDateString()
+            new Date().toLocaleDateString()
     });
 
     salvar();
@@ -76,19 +76,19 @@ function cadastrar(){
 }
 
 // 🔑 login
-function login(){
+function login() {
 
     const email =
-    document.getElementById(
-        "email"
-    ).value.trim();
+        document.getElementById(
+            "email"
+        ).value.trim();
 
     const senha =
-    document.getElementById(
-        "senha"
-    ).value.trim();
+        document.getElementById(
+            "senha"
+        ).value.trim();
 
-    if(!email || !senha){
+    if (!email || !senha) {
 
         return alert(
             "⚠️ Digite email e senha!"
@@ -96,13 +96,13 @@ function login(){
     }
 
     const user =
-    usuarios.find(
-        u =>
-        u.email === email &&
-        u.senha === senha
-    );
+        usuarios.find(
+            u =>
+                u.email === email &&
+                u.senha === senha
+        );
 
-    if(user){
+    if (user) {
 
         localStorage.setItem(
             "logado",
@@ -120,9 +120,9 @@ function login(){
         document.getElementById(
             "usuarioNome"
         ).innerText =
-        "👤 " + email;
+            "👤 " + email;
 
-    }else{
+    } else {
 
         alert(
             "❌ Email ou senha incorretos!"
@@ -131,24 +131,24 @@ function login(){
 }
 
 // ❓ recuperar senha
-function esqueciSenha(){
+function esqueciSenha() {
 
     const email =
-    prompt("Digite seu email:");
+        prompt("Digite seu email:");
 
     const user =
-    usuarios.find(
-        u => u.email === email
-    );
+        usuarios.find(
+            u => u.email === email
+        );
 
-    if(user){
+    if (user) {
 
         alert(
             "🔑 Sua senha é: " +
             user.senha
         );
 
-    }else{
+    } else {
 
         alert(
             "❌ Usuário não encontrado!"
@@ -157,17 +157,17 @@ function esqueciSenha(){
 }
 
 // 🔄 atualizar senha
-function atualizarSenha(){
+function atualizarSenha() {
 
     const email =
-    prompt("Digite seu email:");
+        prompt("Digite seu email:");
 
     const index =
-    usuarios.findIndex(
-        u => u.email === email
-    );
+        usuarios.findIndex(
+            u => u.email === email
+        );
 
-    if(index === -1){
+    if (index === -1) {
 
         return alert(
             "❌ Usuário não encontrado!"
@@ -175,11 +175,11 @@ function atualizarSenha(){
     }
 
     const atual =
-    prompt("Digite sua senha atual:");
+        prompt("Digite sua senha atual:");
 
-    if(
+    if (
         usuarios[index].senha !== atual
-    ){
+    ) {
 
         return alert(
             "❌ Senha incorreta!"
@@ -187,9 +187,9 @@ function atualizarSenha(){
     }
 
     const nova =
-    prompt("Digite a nova senha:");
+        prompt("Digite a nova senha:");
 
-    if(!nova || nova.length < 6){
+    if (!nova || nova.length < 6) {
 
         return alert(
             "❌ Senha muito fraca!"
@@ -197,9 +197,9 @@ function atualizarSenha(){
     }
 
     const confirmar =
-    prompt("Confirme a nova senha:");
+        prompt("Confirme a nova senha:");
 
-    if(nova !== confirmar){
+    if (nova !== confirmar) {
 
         return alert(
             "❌ As senhas não coincidem!"
@@ -216,12 +216,12 @@ function atualizarSenha(){
 }
 
 // 🎵 tocar música
-function tocar(musica,nome){
+function tocar(musica, nome) {
 
     const player =
-    document.getElementById(
-        "player"
-    );
+        document.getElementById(
+            "player"
+        );
 
     player.src = musica;
 
@@ -230,11 +230,11 @@ function tocar(musica,nome){
     document.getElementById(
         "musica"
     ).innerText =
-    "🎶 Tocando: " + nome;
+        "🎶 Tocando: " + nome;
 }
 
 // ⏸️ pausar música
-function pausar(){
+function pausar() {
 
     document.getElementById(
         "player"
@@ -242,7 +242,7 @@ function pausar(){
 }
 
 // 🚪 logout
-function logout(){
+function logout() {
 
     localStorage.removeItem(
         "logado"
@@ -273,11 +273,11 @@ function logout(){
 window.onload = () => {
 
     const logado =
-    localStorage.getItem(
-        "logado"
-    );
+        localStorage.getItem(
+            "logado"
+        );
 
-    if(logado){
+    if (logado) {
 
         document.getElementById(
             "loginPage"
@@ -290,7 +290,33 @@ window.onload = () => {
         document.getElementById(
             "usuarioNome"
         ).innerText =
-        "👤 " + logado;
+            "👤 " + logado;
+    }
+
+    function pesquisarMusica() {
+
+        let filtro =
+            document.getElementById("pesquisa")
+                .value
+                .toLowerCase();
+
+        let cards =
+            document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+
+            let titulo =
+                card.querySelector("h3")
+                    .innerText
+                    .toLowerCase();
+
+            if (titulo.includes(filtro)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
     }
 };
 import './app.js';
