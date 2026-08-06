@@ -125,8 +125,7 @@
                         Home
                     </h1>
 
-                    <div class="user" id="usuarioNome">
-                    </div>
+                    <button class="btn btn-outline-light" id="usuarioNome"></button>
 
                 </div>
 
@@ -146,7 +145,7 @@
                             'Tim Maia - Não Quero Dinheiro'
                         )
                     ">
-                            ▶️ Tocar
+                            ▶ Tocar
                         </button>
 
                         <button onclick="
@@ -154,7 +153,7 @@
                             'Tim Maia - Não Quero Dinheiro'
                         )
                     ">
-                            💖 Favoritar
+                            ♥ Favoritar
                         </button>
 
                     </div>
@@ -174,7 +173,7 @@
                             'Tim Maia - Vale Tudo'
                         )
                     ">
-                            ▶️ Tocar
+                            ▶ Tocar
                         </button>
 
                         <button onclick="
@@ -182,7 +181,7 @@
                             'Tim Maia - Vale Tudo'
                         )
                     ">
-                            💖 Favoritar
+                            ♥ Favoritar
                         </button>
 
                     </div>
@@ -214,7 +213,7 @@
 
                     <button onclick="voltarMusica()">⏮️</button>
 
-                    <button class="play-btn" onclick="togglePlay()">▶️</button>
+                    <button class="play-btn" onclick="togglePlay()"><span class="icon-play">▶</span></button>
 
                     <button onclick="proximaMusica()">⏭️</button>
 
@@ -478,7 +477,7 @@
             );
 
             if (existe) {
-                return alert("❤️ Música já favoritada!");
+                return alert("♥ Música já favoritada!");
             }
 
             favoritas.push({
@@ -492,7 +491,7 @@
                 JSON.stringify(favoritas)
             );
 
-            alert("💖 Música adicionada!");
+            alert("♥ Música adicionada!");
         }
 
         // 🔥 EM ALTA
@@ -518,13 +517,13 @@
                             '${musica.nome}'
                         )
                     ">
-                        ▶️ Tocar
+                        ▶ Tocar
                     </button>
 
                     <button onclick="
                         favoritar('${musica.nome}')
                     ">
-                        💖 Favoritar
+                        ♥ Favoritar
                     </button>
 
                 </div>
@@ -542,7 +541,7 @@
             if (favoritas.length === 0) {
 
                 area.innerHTML = `
-        <h1 class="titulo-beatflow">❤️ Favoritas</h1>
+        <h1 class="titulo-beatflow">♥ Favoritas</h1>
 
         <p style="
             margin-top:20px;
@@ -556,7 +555,7 @@
             }
 
             area.innerHTML = `
-    <h1 class="titulo-beatflow">❤️ Favoritas</h1>
+    <h1 class="titulo-beatflow">♥ Favoritas</h1>
 
     <div class="music-grid">
 
@@ -573,7 +572,7 @@
                         '${musica.nome}'
                     )
                 ">
-                    ▶️ Tocar
+                    ▶ Tocar
                 </button>
 
             </div>

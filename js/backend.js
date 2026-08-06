@@ -329,4 +329,58 @@ import './auth.js';
 import './atualizarSenha.js';
 import './avoritos.js';
 
+// Elementos
+const btnPerfil = document.getElementById("btnPerfil");
+const menuPerfil = document.getElementById("menuPerfil");
 
+const inputFoto = document.getElementById("inputFoto");
+const imgPerfil = document.getElementById("fotoPerfil");
+
+const inputNome = document.getElementById("inputNome");
+const nomePerfil = document.getElementById("nomePerfil");
+
+const btnTrocarConta = document.getElementById("trocarConta");
+
+// Abrir/fechar menu
+btnPerfil.addEventListener("click", () => {
+    menuPerfil.classList.toggle("ativo");
+});
+
+// Trocar foto de perfil
+inputFoto.addEventListener("change", () => {
+    const arquivo = inputFoto.files[0];
+    if (arquivo) {
+        const leitor = new FileReader();
+        leitor.onload = (e) => {
+            imgPerfil.src = e.target.result;
+            localStorage.setItem("fotoPerfil", e.target.result);
+        };
+        leitor.readAsDataURL(arquivo);
+    }
+});
+
+// Trocar nome
+inputNome.addEventListener("input", () => {
+    nomePerfil.textContent = inputNome.value;
+    localStorage.setItem("nomePerfil", inputNome.value);
+});
+
+// Trocar conta (simples)
+btnTrocarConta.addEventListener("click", () => {
+    if (confirm("Deseja trocar de conta?")) {
+        localStorage.clear();
+        location.reload();
+    }
+});
+
+// Carregar dados salvos
+window.onload = () => {
+    const fotoSalva = localStorage.getItem("fotoPerfil");
+    const nomeSalvo = localStorage.getItem("nomePerfil");
+
+    if (fotoSalva) imgPerfil.src = fotoSalva;
+    if (nomeSalvo) {
+        nomePerfil.textContent = nomeSalvo;
+        inputNome.value = nomeSalvo;
+    }
+};
